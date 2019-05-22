@@ -210,6 +210,7 @@ class TrainerBase(Runner, metaclass=ABCMeta):
 
         for data in data_loader:
             data = TensorTuple(data).to(self.device, non_blocking=self._cuda_nonblocking)
+            print("tr.py",data)
             if self.is_train:
                 self._step += 1
             self._iteration(data, mode)
