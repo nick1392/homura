@@ -248,6 +248,7 @@ class TrainerBase(Runner, metaclass=ABCMeta):
         :param mode: Name of this loop. Default is `test`. Passed to callbacks.
         :return:
         """
+        print("TEST PHASE")
 
         self._is_train = False
         self.model.eval()
