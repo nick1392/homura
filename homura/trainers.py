@@ -198,6 +198,7 @@ class TrainerBase(Runner, metaclass=ABCMeta):
     def _loop(self,
               data_loader: DataLoader,
               mode: str):
+        print(mode)
         # handle epoch level training loop
         self._epoch_map.update({EPOCH: self.epoch,
                                 STEP: self.step,
@@ -210,7 +211,7 @@ class TrainerBase(Runner, metaclass=ABCMeta):
 
         for data in data_loader:
             data = TensorTuple(data).to(self.device, non_blocking=self._cuda_nonblocking)
-            print("tr.py",data)
+            #print("tr.py",data)
             if self.is_train:
                 self._step += 1
             self._iteration(data, mode)
