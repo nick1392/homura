@@ -183,6 +183,8 @@ class TrainerBase(Runner, metaclass=ABCMeta):
         # backward compatibility
         if isinstance(results, tuple):
             loss, output = TensorTuple(results).to(CPU)
+            print("loss",loss)
+            print("output",output)
             results = dict(loss=loss, output=output)
             self._iteration_map.update(**results)
         else:
@@ -198,7 +200,6 @@ class TrainerBase(Runner, metaclass=ABCMeta):
     def _loop(self,
               data_loader: DataLoader,
               mode: str):
-        print(mode)
         # handle epoch level training loop
         self._epoch_map.update({EPOCH: self.epoch,
                                 STEP: self.step,
