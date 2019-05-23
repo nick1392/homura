@@ -194,7 +194,6 @@ class TrainerBase(Runner, metaclass=ABCMeta):
             self._callbacks.after_iteration(self._iteration_map)
         # clean up
         self._iteration_map.pop(DATA)
-        print("Results",results)
         for k in results.keys():
             self._iteration_map.pop(k)
 
@@ -251,7 +250,7 @@ class TrainerBase(Runner, metaclass=ABCMeta):
         :param mode: Name of this loop. Default is `test`. Passed to callbacks.
         :return:
         """
-        print("TEST PHASE")
+        #print("TEST PHASE")
 
         self._is_train = False
         self.model.eval()
