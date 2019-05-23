@@ -183,8 +183,8 @@ class TrainerBase(Runner, metaclass=ABCMeta):
         # backward compatibility
         if isinstance(results, tuple):
             loss, output = TensorTuple(results).to(CPU)
-            print("loss",loss)
-            print("output",output)
+            #print("loss",loss)
+            #print("output",output)
             results = dict(loss=loss, output=output)
             self._iteration_map.update(**results)
         else:
@@ -194,6 +194,7 @@ class TrainerBase(Runner, metaclass=ABCMeta):
             self._callbacks.after_iteration(self._iteration_map)
         # clean up
         self._iteration_map.pop(DATA)
+        print("Results",results)
         for k in results.keys():
             self._iteration_map.pop(k)
 
