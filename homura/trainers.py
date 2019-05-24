@@ -341,7 +341,9 @@ class SupervisedTrainer(TrainerBase):
         output = self.model(input)
         loss = self.loss_f(output, target)
         print("output",output)
+        print("output_size",output.size())
         print("target",target)
+        print("output_size",target.size())
         print("loss",loss)
         if self.is_train:
             self.optimizer.zero_grad()
