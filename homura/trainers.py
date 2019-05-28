@@ -358,7 +358,7 @@ class SupervisedTrainer(TrainerBase):
             self.output_txt.write(str(output.data.cpu())+"\n")
             self.iteration_id += 1
             
-            filename = 'class'+ +'outfile' + str(self.iteration_id)
+            filename = 'outfile' + str(self.iteration_id)
             
             np.save(filename, output.data.cpu().numpy())
 #            with open('class'+ +'outfile' + str(self.iteration_id) + '.txt','w+') as f:
