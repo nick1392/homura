@@ -342,9 +342,9 @@ class SupervisedTrainer(TrainerBase):
         input, target = data
         output = self.model(input)
         loss = self.loss_f(output, target)
-        self.output_txt.write(self.iteration_id)
-        self.output_txt.write(target)
-        self.output_txt.write(output)
+        self.output_txt.write("iteration %s \n"%(self.iteration_id))
+        self.output_txt.write(str(target))
+        self.output_txt.write(str(output))
         print("iteration id", self.iteration_id)
         self.iteration_id += 1
         print("output",output)
