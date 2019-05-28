@@ -350,9 +350,10 @@ class SupervisedTrainer(TrainerBase):
             if self.scheduler is not None and not self.update_scheduler_by_epoch:
                 self.scheduler.step()
         else:
+            torch.set_printoptions(profile="full")
             self.output_txt.write("iteration %s \n"%(self.iteration_id))
-            self.output_txt.write(str(target))
-            self.output_txt.write(str(output))
+            self.output_txt.write(str(target.data.gpu())+"\n")
+            self.output_txt.write(str(output.data.gpu())+"\n")
             print("iteration id", self.iteration_id)
             self.iteration_id += 1
             print("output",output)
@@ -360,6 +361,7 @@ class SupervisedTrainer(TrainerBase):
             print("target",target)
             print("output_size",target.size())
             print("loss",loss)
+            torch.set_printoptions(profile="default")
         return Map(loss=loss, output=output)
 
 
