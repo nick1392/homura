@@ -356,18 +356,14 @@ class SupervisedTrainer(TrainerBase):
             self.output_txt.write("iteration %s \n"%(self.iteration_id))
             self.output_txt.write(str(target.data.cpu())+"\n")
             self.output_txt.write(str(output.data.cpu())+"\n")
-            print("iteration id", self.iteration_id)
             self.iteration_id += 1
-            print("output",output)
-            print("output_size",output.size())
-            print("target",target)
-            print("output_size",target.size())
-            print("loss",loss)
             
-            mat = output.data.cpu().numpy()
-            with open('outfile' + str(self.iteration_id) + '.txt','w+') as f:
-                for line in mat:
-                    np.savetxt(f, line, fmt='%.2f')
+            filename = 'class'+ +'outfile' + str(self.iteration_id)
+            
+            np.save(filename, output.data.cpu().numpy())
+#            with open('class'+ +'outfile' + str(self.iteration_id) + '.txt','w+') as f:
+#                for line in mat:
+#                    np.savetxt(f, line, fmt='%.2f')
             torch.set_printoptions(profile="default")
         return Map(loss=loss, output=output)
 
