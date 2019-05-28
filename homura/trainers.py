@@ -328,6 +328,7 @@ class SupervisedTrainer(TrainerBase):
     def __init__(self, model: nn.Module, optimizer: Optimizer, loss_f: Callable, *,
                  callbacks: Optional[Callback or Iterable[Callable]] = None, scheduler: Optional[LRScheduler] = None,
                  verb=True, use_cudnn_benchmark=True, data_parallel=False, **kwargs):
+        self.iteration_id = 0
         if isinstance(model, dict):
             raise TypeError(f"{type(self)} does not support dict model")
         super(SupervisedTrainer, self).__init__(model, optimizer, loss_f, callbacks=callbacks, scheduler=scheduler,
@@ -340,6 +341,8 @@ class SupervisedTrainer(TrainerBase):
         input, target = data
         output = self.model(input)
         loss = self.loss_f(output, target)
+        print("iteration id", self.iteration_id)
+        self.iteration_id += 1
         print("output",output)
         print("output_size",output.size())
         print("target",target)
