@@ -361,6 +361,11 @@ class SupervisedTrainer(TrainerBase):
             print("target",target)
             print("output_size",target.size())
             print("loss",loss)
+            
+            mat = output.data.cpu().numpy()
+            with open('outfile' + self.iteration_id + '.txt') as f:
+                for line in mat:
+                    np.savetxt(f, line, fmt='%.2f')
             torch.set_printoptions(profile="default")
         return Map(loss=loss, output=output)
 
