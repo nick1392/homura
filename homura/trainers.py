@@ -331,7 +331,6 @@ class SupervisedTrainer(TrainerBase):
                  callbacks: Optional[Callback or Iterable[Callable]] = None, scheduler: Optional[LRScheduler] = None,
                  verb=True, use_cudnn_benchmark=True, data_parallel=False, **kwargs):
         self.iteration_id = 0
-        self.output_txt = open("average.txt","w")
         if isinstance(model, dict):
             raise TypeError(f"{type(self)} does not support dict model")
         super(SupervisedTrainer, self).__init__(model, optimizer, loss_f, callbacks=callbacks, scheduler=scheduler,
@@ -353,14 +352,14 @@ class SupervisedTrainer(TrainerBase):
                 self.scheduler.step()
         else:
             torch.set_printoptions(profile="full")
-            self.output_txt.write("iteration %s \n"%(self.iteration_id))
-            self.output_txt.write(str(target.data.cpu())+"\n")
-            self.output_txt.write(str(output.data.cpu())+"\n")
             self.iteration_id += 1
+            print(self.iteration_id)
             
             filename = 'outfile' + str(self.iteration_id)
-            
             np.save(filename, output.data.cpu().numpy())
+            filename_target = 'outfile_target' + str(self.iteration_id)
+            np.save(filename_target, output.target.cpu().numpy())
+            
 #            with open('class'+ +'outfile' + str(self.iteration_id) + '.txt','w+') as f:
 #                for line in mat:
 #                    np.savetxt(f, line, fmt='%.2f')
