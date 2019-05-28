@@ -329,6 +329,7 @@ class SupervisedTrainer(TrainerBase):
                  callbacks: Optional[Callback or Iterable[Callable]] = None, scheduler: Optional[LRScheduler] = None,
                  verb=True, use_cudnn_benchmark=True, data_parallel=False, **kwargs):
         self.iteration_id = 0
+        self.output_txt = open("average.txt","w")
         if isinstance(model, dict):
             raise TypeError(f"{type(self)} does not support dict model")
         super(SupervisedTrainer, self).__init__(model, optimizer, loss_f, callbacks=callbacks, scheduler=scheduler,
@@ -341,6 +342,9 @@ class SupervisedTrainer(TrainerBase):
         input, target = data
         output = self.model(input)
         loss = self.loss_f(output, target)
+        self.output_txt.write(self.iteration_id)
+        self.output_txt.write(target)
+        self.output_txt.write(output)
         print("iteration id", self.iteration_id)
         self.iteration_id += 1
         print("output",output)
