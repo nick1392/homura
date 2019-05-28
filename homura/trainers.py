@@ -342,22 +342,24 @@ class SupervisedTrainer(TrainerBase):
         input, target = data
         output = self.model(input)
         loss = self.loss_f(output, target)
-        self.output_txt.write("iteration %s \n"%(self.iteration_id))
-        self.output_txt.write(str(target))
-        self.output_txt.write(str(output))
-        print("iteration id", self.iteration_id)
-        self.iteration_id += 1
-        print("output",output)
-        print("output_size",output.size())
-        print("target",target)
-        print("output_size",target.size())
-        print("loss",loss)
+
         if self.is_train:
             self.optimizer.zero_grad()
             loss.backward()
             self.optimizer.step()
             if self.scheduler is not None and not self.update_scheduler_by_epoch:
                 self.scheduler.step()
+        else:
+            self.output_txt.write("iteration %s \n"%(self.iteration_id))
+            self.output_txt.write(str(target))
+            self.output_txt.write(str(output))
+            print("iteration id", self.iteration_id)
+            self.iteration_id += 1
+            print("output",output)
+            print("output_size",output.size())
+            print("target",target)
+            print("output_size",target.size())
+            print("loss",loss)
         return Map(loss=loss, output=output)
 
 
