@@ -352,8 +352,8 @@ class SupervisedTrainer(TrainerBase):
         else:
             torch.set_printoptions(profile="full")
             self.output_txt.write("iteration %s \n"%(self.iteration_id))
-            self.output_txt.write(str(target.data.gpu())+"\n")
-            self.output_txt.write(str(output.data.gpu())+"\n")
+            self.output_txt.write(str(target.data.cpu()+"\n")
+            self.output_txt.write(str(output.data.cpu()+"\n")
             print("iteration id", self.iteration_id)
             self.iteration_id += 1
             print("output",output)
