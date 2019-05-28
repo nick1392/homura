@@ -8,6 +8,8 @@ from torch import nn
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 
+import numpy as np
+
 from homura.liblog import get_logger
 from homura.lr_scheduler import LRScheduler
 from homura.optim import Optimizer
