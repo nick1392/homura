@@ -355,9 +355,9 @@ class SupervisedTrainer(TrainerBase):
             self.iteration_id += 1
             print(self.iteration_id)
             
-            filename = 'file/outfile' + str(self.iteration_id).zfill(4)
+            filename = 'file/epoch'+ str(self.epoch).zfill(3) +'_outfile' + str(self.iteration_id).zfill(4)
             np.save(filename, output.data.cpu().numpy())
-            filename_target = 'file/outfile_target' + str(self.iteration_id).zfill(4)
+            filename_target = 'file/epoch'+ tr(self.epoch).zfill(3) +'_outfile_target' + str(self.iteration_id).zfill(4)
             np.save(filename_target, target.data.cpu().numpy())
             
 #            with open('class'+ +'outfile' + str(self.iteration_id) + '.txt','w+') as f:
