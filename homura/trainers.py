@@ -351,6 +351,8 @@ class SupervisedTrainer(TrainerBase):
             if self.scheduler is not None and not self.update_scheduler_by_epoch:
                 self.scheduler.step()
         else:
+            print("ITERATION ID")
+            print(iteration_id)
             torch.set_printoptions(profile="full")
             self.iteration_id += 1
             print(self.iteration_id)
