@@ -352,7 +352,7 @@ class SupervisedTrainer(TrainerBase):
                 self.scheduler.step()
         else:
             print("ITERATION ID")
-            print(iteration_id)
+            print(self.iteration_id)
             torch.set_printoptions(profile="full")
             self.iteration_id += 1
             print(self.iteration_id)
