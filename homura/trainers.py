@@ -351,11 +351,10 @@ class SupervisedTrainer(TrainerBase):
             if self.scheduler is not None and not self.update_scheduler_by_epoch:
                 self.scheduler.step()
         else:
-            print("ITERATION ID")
-            print(self.iteration_id)
+            #print("ITERATION ID")
             torch.set_printoptions(profile="full")
             self.iteration_id += 1
-            print(self.iteration_id)
+            #print(self.iteration_id)
             
             filename = 'file/epoch'+ str(self.epoch).zfill(3) +'_outfile' + str(self.iteration_id).zfill(4)
             np.save(filename, output.data.cpu().numpy())
