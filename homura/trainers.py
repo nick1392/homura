@@ -370,7 +370,7 @@ class SupervisedTrainer(TrainerBase):
             #print(output)
             #np.save(filename, output.data.cpu().numpy())
             filename_target = 'file/target/epoch'+ str(self.epoch).zfill(3) +'target' + str(self.iteration_id).zfill(4)
-            np.save(filename_target, target.data.cpu().numpy())
+            #np.save(filename_target, target.data.cpu().numpy())
             
 #            with open('class'+ +'outfile' + str(self.iteration_id) + '.txt','w+') as f:
 #                for line in mat:
