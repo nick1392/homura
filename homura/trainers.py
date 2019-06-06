@@ -242,6 +242,7 @@ class TrainerBase(Runner, metaclass=ABCMeta):
         self._epoch += 1
         self.model.epoch_counter = self.epoch
         self.iteration_id = 0
+        self.model.iteration_id = 0
         self.model.train()
         if hasattr(self.loss_f, "train"):
             self.loss_f.train()
@@ -267,6 +268,7 @@ class TrainerBase(Runner, metaclass=ABCMeta):
         self._is_open = open_set
         self.model.open_set = open_set
         self.iteration_id = 0
+        self.model.iteration_id = 0
         self.model.eval()
         if hasattr(self.loss_f, "eval"):
             self.loss_f.eval()
