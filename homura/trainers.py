@@ -95,6 +95,7 @@ class TrainerBase(Runner, metaclass=ABCMeta):
         self._epoch = -1
         self._is_train = True
         self._is_open = False
+        self.iteration_id = 0
 
         _map_base = {MODEL: self.model,
                      OPTIMIZER: self.optimizer,
@@ -238,6 +239,7 @@ class TrainerBase(Runner, metaclass=ABCMeta):
         self.model.open_set = False
         self._epoch += 1
         self.model.epoch_counter = self.epoch
+        self.iteration_id = 0
         self.model.train()
         if hasattr(self.loss_f, "train"):
             self.loss_f.train()
@@ -262,6 +264,7 @@ class TrainerBase(Runner, metaclass=ABCMeta):
         self._is_train = False
         self._is_open = open_set
         self.model.open_set = open_set
+        self.iteration_id = 0
         self.model.eval()
         if hasattr(self.loss_f, "eval"):
             self.loss_f.eval()
@@ -337,7 +340,7 @@ class SupervisedTrainer(TrainerBase):
     def __init__(self, model: nn.Module, optimizer: Optimizer, loss_f: Callable, *,
                  callbacks: Optional[Callback or Iterable[Callable]] = None, scheduler: Optional[LRScheduler] = None,
                  verb=True, use_cudnn_benchmark=True, data_parallel=False, **kwargs):
-        self.iteration_id = 0
+        
         if isinstance(model, dict):
             raise TypeError(f"{type(self)} does not support dict model")
         super(SupervisedTrainer, self).__init__(model, optimizer, loss_f, callbacks=callbacks, scheduler=scheduler,
@@ -363,9 +366,9 @@ class SupervisedTrainer(TrainerBase):
             self.iteration_id += 1
             #print(self.iteration_id)
             
-            filename = 'file/epoch'+ str(self.epoch).zfill(3) +'_outfile' + str(self.iteration_id).zfill(4)
+            filename = 'file/FC/epoch'+ str(self.epoch).zfill(3) +'_outfile' + str(self.iteration_id).zfill(4)
             np.save(filename, output.data.cpu().numpy())
-            filename_target = 'file/epoch'+ str(self.epoch).zfill(3) +'_outfile_target' + str(self.iteration_id).zfill(4)
+            filename_target = 'file/target/epoch'+ str(self.epoch).zfill(3) +'_outfile_target' + str(self.iteration_id).zfill(4)
             np.save(filename_target, target.data.cpu().numpy())
             
 #            with open('class'+ +'outfile' + str(self.iteration_id) + '.txt','w+') as f:
