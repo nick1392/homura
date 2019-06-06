@@ -358,6 +358,12 @@ class SupervisedTrainer(TrainerBase):
         if self._is_open:
             self.iteration_id += 1
             self.model.open_class = False
+
+            torch.set_printoptions(profile="full")
+            filename_target = 'file/target/epoch'+ str(self.epoch).zfill(3) +'target' + str(self.iteration_id).zfill(4)
+            np.save(filename_target, target.data.cpu().numpy())
+            torch.set_printoptions(profile="default")
+            
             for el in target.data.cpu():
                 if el == self.model.num_classes:
                     self.model.open_class = True
@@ -373,21 +379,11 @@ class SupervisedTrainer(TrainerBase):
             if self.scheduler is not None and not self.update_scheduler_by_epoch:
                 self.scheduler.step()
         elif self._is_open:
-            #print("ITERATION ID")
             torch.set_printoptions(profile="full")
-            
-            #print(self.iteration_id)
-            
             filename = 'file/FC/epoch'+ str(self.epoch).zfill(3) +'FC' + str(self.iteration_id).zfill(4)
-            #print(output)
             np.save(filename, output.data.cpu().numpy())
-            filename_target = 'file/target/epoch'+ str(self.epoch).zfill(3) +'target' + str(self.iteration_id).zfill(4)
-            np.save(filename_target, target.data.cpu().numpy())
-            
-#            with open('class'+ +'outfile' + str(self.iteration_id) + '.txt','w+') as f:
-#                for line in mat:
-#                    np.savetxt(f, line, fmt='%.2f')
             torch.set_printoptions(profile="default")
+            
         return Map(loss=loss, output=output)
 
 
