@@ -184,6 +184,8 @@ class TrainerBase(Runner, metaclass=ABCMeta):
         with torch.no_grad():
             self._callbacks.before_iteration(self._iteration_map)
         results = self.iteration(data)
+        if self.model.open_class:
+            return
         # backward compatibility
         if isinstance(results, tuple):
             loss, output = TensorTuple(results).to(CPU)
@@ -355,8 +357,10 @@ class SupervisedTrainer(TrainerBase):
         
         if self._is_open:
             self.iteration_id += 1
+            self.model.open_class = False
             for el in target.data.cpu():
                 if el == self.model.num_classes:
+                    self.model.open_class = True
                     return
         
         loss = self.loss_f(output, target)
