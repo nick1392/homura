@@ -351,12 +351,16 @@ class SupervisedTrainer(TrainerBase):
 
     def iteration(self, data: Tuple[torch.Tensor]) -> Mapping[str, torch.Tensor]:
         input, target = data
-        if self._is_open:
-            print(input)
-            print(target)
-        
         output = self.model(input)
+        
+        if self._is_open:
+            self.iteration_id += 1
+            for el in target.data.cpu():
+                if el == self.model.num_classes:
+                    return
+        
         loss = self.loss_f(output, target)
+        
 
         if self.is_train:
             self.optimizer.zero_grad()
@@ -367,7 +371,7 @@ class SupervisedTrainer(TrainerBase):
         elif self._is_open:
             #print("ITERATION ID")
             torch.set_printoptions(profile="full")
-            self.iteration_id += 1
+            
             #print(self.iteration_id)
             
             filename = 'file/FC/epoch'+ str(self.epoch).zfill(3) +'FC' + str(self.iteration_id).zfill(4)
