@@ -351,6 +351,10 @@ class SupervisedTrainer(TrainerBase):
 
     def iteration(self, data: Tuple[torch.Tensor]) -> Mapping[str, torch.Tensor]:
         input, target = data
+        if self._is_open:
+            print(input)
+            print(target)
+        
         output = self.model(input)
         loss = self.loss_f(output, target)
 
