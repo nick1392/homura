@@ -356,13 +356,12 @@ class SupervisedTrainer(TrainerBase):
     def iteration(self, data: Tuple[torch.Tensor]) -> Mapping[str, torch.Tensor]:
         input, target = data
         output = self.model(input)
-        
+        self.iteration_id += 1
         if self._is_open:
-            self.iteration_id += 1
             self.model.open_class = False
 
             torch.set_printoptions(profile="full")
-            filename_target = 'file/target/epoch'+ str(self.epoch).zfill(3) +'target' + str(self.iteration_id).zfill(4)
+            filename_target = 'file/test/target/epoch'+ str(self.epoch).zfill(3) +'target' + str(self.iteration_id).zfill(4)
             np.save(filename_target, target.data.cpu().numpy())
             torch.set_printoptions(profile="default")
             
@@ -380,9 +379,16 @@ class SupervisedTrainer(TrainerBase):
             self.optimizer.step()
             if self.scheduler is not None and not self.update_scheduler_by_epoch:
                 self.scheduler.step()
+                
+            torch.set_printoptions(profile="full")
+            filename = 'file/train/FC/epoch'+ str(self.epoch).zfill(3) +'FC' + str(self.iteration_id).zfill(4)
+            np.save(filename, output.data.cpu().numpy())
+            torch.set_printoptions(profile="default")
+            filename_target = 'file/train/target/epoch'+ str(self.epoch).zfill(3) +'target' + str(self.iteration_id).zfill(4)
+            np.save(filename_target, target.data.cpu().numpy())
         elif self._is_open:
             torch.set_printoptions(profile="full")
-            filename = 'file/FC/epoch'+ str(self.epoch).zfill(3) +'FC' + str(self.iteration_id).zfill(4)
+            filename = 'file/test/FC/epoch'+ str(self.epoch).zfill(3) +'FC' + str(self.iteration_id).zfill(4)
             np.save(filename, output.data.cpu().numpy())
             torch.set_printoptions(profile="default")
             
