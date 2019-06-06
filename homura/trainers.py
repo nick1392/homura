@@ -235,6 +235,7 @@ class TrainerBase(Runner, metaclass=ABCMeta):
 
         self._is_train = True
         self._is_open = False
+        self.model.open_set = False
         self._epoch += 1
         self.model.train()
         if hasattr(self.loss_f, "train"):
@@ -259,6 +260,7 @@ class TrainerBase(Runner, metaclass=ABCMeta):
 
         self._is_train = False
         self._is_open = open_set
+        self.model.open_set = open_set
         self.model.eval()
         if hasattr(self.loss_f, "eval"):
             self.loss_f.eval()
@@ -347,9 +349,7 @@ class SupervisedTrainer(TrainerBase):
         input, target = data
         output = self.model(input)
         loss = self.loss_f(output, target)
-        print(self.model.open_set)
-        self.model.open_set = True
-        print(self.model.open_set)
+
         if self.is_train:
             self.optimizer.zero_grad()
             loss.backward()
