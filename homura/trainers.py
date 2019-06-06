@@ -354,7 +354,7 @@ class SupervisedTrainer(TrainerBase):
             self.optimizer.step()
             if self.scheduler is not None and not self.update_scheduler_by_epoch:
                 self.scheduler.step()
-        elif self.is_open:
+        elif self._is_open:
             #print("ITERATION ID")
             torch.set_printoptions(profile="full")
             self.iteration_id += 1
