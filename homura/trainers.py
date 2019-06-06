@@ -347,7 +347,9 @@ class SupervisedTrainer(TrainerBase):
         input, target = data
         output = self.model(input)
         loss = self.loss_f(output, target)
-
+        print(self.model.open_set)
+        self.model.open_set = True
+        print(self.model.open_set)
         if self.is_train:
             self.optimizer.zero_grad()
             loss.backward()
