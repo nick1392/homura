@@ -94,6 +94,7 @@ class TrainerBase(Runner, metaclass=ABCMeta):
         self._step = -1
         self._epoch = -1
         self._is_train = True
+        self._is_open = False
 
         _map_base = {MODEL: self.model,
                      OPTIMIZER: self.optimizer,
@@ -233,6 +234,7 @@ class TrainerBase(Runner, metaclass=ABCMeta):
         """
 
         self._is_train = True
+        self._is_open = False
         self._epoch += 1
         self.model.train()
         if hasattr(self.loss_f, "train"):
@@ -245,6 +247,7 @@ class TrainerBase(Runner, metaclass=ABCMeta):
 
     def test(self,
              data_loader: DataLoader,
+             open_set: bool = False,
              mode: str = TEST):
         """ Non-training loop.
 
@@ -252,9 +255,10 @@ class TrainerBase(Runner, metaclass=ABCMeta):
         :param mode: Name of this loop. Default is `test`. Passed to callbacks.
         :return:
         """
-        #print("TEST PHASE")
+        print(mode)
 
         self._is_train = False
+        self._is_open = open_set
         self.model.eval()
         if hasattr(self.loss_f, "eval"):
             self.loss_f.eval()
@@ -350,7 +354,7 @@ class SupervisedTrainer(TrainerBase):
             self.optimizer.step()
             if self.scheduler is not None and not self.update_scheduler_by_epoch:
                 self.scheduler.step()
-        else:
+        elif self.is_open:
             #print("ITERATION ID")
             torch.set_printoptions(profile="full")
             self.iteration_id += 1
