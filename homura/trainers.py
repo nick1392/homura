@@ -236,6 +236,7 @@ class TrainerBase(Runner, metaclass=ABCMeta):
         self._is_train = True
         self._is_open = False
         self.model.open_set = False
+        self.model.epoch_counter = self.epoch
         self._epoch += 1
         self.model.train()
         if hasattr(self.loss_f, "train"):
