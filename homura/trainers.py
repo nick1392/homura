@@ -361,7 +361,7 @@ class SupervisedTrainer(TrainerBase):
             self.model.open_class = False
 
             torch.set_printoptions(profile="full")
-            filename_target = 'file/test/target/epoch'+ str(self.epoch).zfill(3) +'target' + str(self.iteration_id).zfill(4)
+            filename_target = str(self.model.open_class_index)+'/file/test/target/epoch'+ str(self.epoch).zfill(3) +'target' + str(self.iteration_id).zfill(4)
             np.save(filename_target, target.data.cpu().numpy())
             torch.set_printoptions(profile="default")
             
@@ -381,14 +381,14 @@ class SupervisedTrainer(TrainerBase):
                 self.scheduler.step()
                 
             torch.set_printoptions(profile="full")
-            filename = 'file/train/FC/epoch'+ str(self.epoch).zfill(3) +'FC' + str(self.iteration_id).zfill(4)
+            filename = str(self.model.open_class_index)+'/file/train/FC/epoch'+ str(self.epoch).zfill(3) +'FC' + str(self.iteration_id).zfill(4)
             np.save(filename, output.data.cpu().numpy())
             torch.set_printoptions(profile="default")
-            filename_target = 'file/train/target/epoch'+ str(self.epoch).zfill(3) +'target' + str(self.iteration_id).zfill(4)
+            filename_target = str(self.model.open_class_index)+'/file/train/target/epoch'+ str(self.epoch).zfill(3) +'target' + str(self.iteration_id).zfill(4)
             np.save(filename_target, target.data.cpu().numpy())
         elif self._is_open:
             torch.set_printoptions(profile="full")
-            filename = 'file/test/FC/epoch'+ str(self.epoch).zfill(3) +'FC' + str(self.iteration_id).zfill(4)
+            filename = str(self.model.open_class_index)+'/file/test/FC/epoch'+ str(self.epoch).zfill(3) +'FC' + str(self.iteration_id).zfill(4)
             np.save(filename, output.data.cpu().numpy())
             torch.set_printoptions(profile="default")
             
