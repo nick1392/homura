@@ -367,6 +367,7 @@ class SupervisedTrainer(TrainerBase):
             
             for el in target.data.cpu():
                 if el == self.model.num_classes:
+                    print('#################RETURNED#############')
                     self.model.open_class = True
                     return
         
