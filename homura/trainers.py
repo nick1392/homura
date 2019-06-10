@@ -213,11 +213,10 @@ class TrainerBase(Runner, metaclass=ABCMeta):
                                 ITER_PER_EPOCH: len(data_loader)})
         with torch.no_grad():
             self._callbacks.before_epoch(self._epoch_map)
-
+        
         data_loader = tqdm(data_loader, ncols=80) if self._verb else data_loader
 
         for data in data_loader:
-            print("tr.py",data)
             data = TensorTuple(data).to(self.device, non_blocking=self._cuda_nonblocking)
             if self.is_train:
                 self._step += 1
