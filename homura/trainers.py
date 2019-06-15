@@ -365,7 +365,8 @@ class SupervisedTrainer(TrainerBase):
             torch.set_printoptions(profile="default")
             
             for el in target.data.cpu():
-                if el == self.model.num_classes:
+                #if el == self.model.num_classes:
+                if el in self.model.open_set_classes:
                     self.model.open_class = True
                     return
         
