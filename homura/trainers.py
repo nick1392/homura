@@ -360,6 +360,7 @@ class SupervisedTrainer(TrainerBase):
             self.model.open_class = False
 
             torch.set_printoptions(profile="full")
+            print(self.iteration_id)
             filename_target = str(self.model.open_class_index)+'/file/test/target/epoch'+ str(self.epoch).zfill(3) +'target' + str(self.iteration_id).zfill(4)
             np.save(filename_target, target.data.cpu().numpy())
             torch.set_printoptions(profile="default")
