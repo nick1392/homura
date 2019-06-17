@@ -367,8 +367,8 @@ class SupervisedTrainer(TrainerBase):
             
             for el in target.data.cpu():
                 #if el == self.model.num_classes:
-                print(el)
-                if el in self.model.open_set_classes:
+                print(el.data.cpu())
+                if el.data.cpu() in self.model.open_set_classes:
                     print(el)
                     self.model.open_class = True
                     return
