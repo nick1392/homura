@@ -367,9 +367,10 @@ class SupervisedTrainer(TrainerBase):
             
             for el in target.data.cpu():
                 #if el == self.model.num_classes:
-                print(el.item())
+                #print(el.item())
+                #FIX RENDERLO PARAMTERIZZABILE TODO
                 if el.item() > 5:
-                    print(el)
+                    #print(el)
                     self.model.open_class = True
                     return
         
